@@ -143,9 +143,20 @@
     box-shadow 0.2s ease;
 }
 
+.support-form button:disabled {
+  cursor: not-allowed;
+  opacity: 0.68;
+  transform: none;
+}
+
 .support-form button:hover {
   transform: translateY(-2px);
   box-shadow: var(--button-shadow-hover);
+}
+
+.support-form button:disabled:hover {
+  transform: none;
+  box-shadow: var(--button-shadow);
 }
 
 .support-form button:focus-visible {
@@ -208,6 +219,20 @@
   color: var(--text-h);
   white-space: pre-wrap;
   word-break: break-word;
+}
+
+.form-status {
+  margin: 2px 0 0;
+  font-size: 14px;
+  font-weight: 700;
+}
+
+.form-status-success {
+  color: #147d64;
+}
+
+.form-status-error {
+  color: #b42318;
 }
 
 @media (max-width: 860px) {

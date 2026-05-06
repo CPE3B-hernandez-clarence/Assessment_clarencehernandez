@@ -18,6 +18,10 @@ const contactSupportSchema = new mongoose.Schema(
       required: true,
       trim: true,
     },
+    submittedAt: {
+      type: Date,
+      default: Date.now,
+    },
   },
   {
     timestamps: true,

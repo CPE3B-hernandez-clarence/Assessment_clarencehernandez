@@ -11,17 +11,23 @@ import ContactSupport from './models/ContactSupport';
 dotenv.config();
 
 const app = express();
-app.use(cors());
+app.use(cors({
+  origin: process.env.CLIENT_URL || 'http://localhost:5173',
+}));
 app.use(express.json());
 
 const PORT = process.env.PORT || 5000;
 const MONGO_URI = process.env.MONGO_URI || '';
-const EMAIL_USER = 'yourgmail@gmail.com';
-const EMAIL_PASS = 'your_google_app_password';
-const SUPPORT_EMAIL = 'clarence.hernandez.7@gmail.com';
+const EMAIL_HOST = process.env.EMAIL_HOST || 'smtp.gmail.com';
+const EMAIL_PORT = Number(process.env.EMAIL_PORT || 587);
+const EMAIL_USER = process.env.EMAIL_USER || '';
+const EMAIL_PASS = process.env.EMAIL_PASS || '';
+const SUPPORT_EMAIL = process.env.SUPPORT_EMAIL || EMAIL_USER;
 
 const transporter = nodemailer.createTransport({
-  service: 'gmail',
+  host: EMAIL_HOST,
+  port: EMAIL_PORT,
+  secure: EMAIL_PORT === 465,
   auth: {
     user: EMAIL_USER,
     pass: EMAIL_PASS,
@@ -29,9 +35,14 @@ const transporter = nodemailer.createTransport({
 });
 
 // Connect to MongoDB
-mongoose.connect(MONGO_URI, { dbName: 'Mail' })
-  .then(() => console.log('✅ Connected to MongoDB Atlas'))
-  .catch((err) => console.error('❌ MongoDB Connection Error:', err));
+if (!MONGO_URI) {
+  console.error('MONGO_URI is required in your .env file');
+  process.exit(1);
+}
+
+mongoose.connect(MONGO_URI, { dbName: process.env.MONGO_DB_NAME || 'Mail' })
+  .then(() => console.log('Connected to MongoDB'))
+  .catch((err) => console.error('MongoDB Connection Error:', err));
 
 app.get('/', (req, res) => {
   res.send('Backend is running!');
@@ -52,23 +63,32 @@ app.post('/contact-support', async (req, res) => {
       name,
       email,
       message,
+      submittedAt: new Date(),
     });
 
-    await transporter.sendMail({
-      from: `"Contact Support" <${EMAIL_USER}>`,
-      to: SUPPORT_EMAIL,
-      subject: 'New Contact Support Message',
-      html: `
-        <h3>New Contact Support Message</h3>
-        <p><strong>Name:</strong> ${name}</p>
-        <p><strong>Email:</strong> ${email}</p>
-        <p><strong>Message:</strong></p>
-        <p>${message}</p>
-      `,
-    });
+    if (EMAIL_USER && EMAIL_PASS && SUPPORT_EMAIL) {
+      try {
+        await transporter.sendMail({
+          from: `"Contact Support" <${EMAIL_USER}>`,
+          replyTo: email,
+          to: SUPPORT_EMAIL,
+          subject: 'New Contact Support Message',
+          text: [
+            'New Contact Support Message',
+            `Name: ${name}`,
+            `Email: ${email}`,
+            `Submitted At: ${contactSupport.submittedAt.toISOString()}`,
+            '',
+            message,
+          ].join('\n'),
+        });
+      } catch (emailError) {
+        console.error('Contact support email error:', emailError);
+      }
+    }
 
     res.status(201).json({
-      message: 'Contact support message saved and email sent successfully',
+      message: 'Contact support message saved successfully',
       data: contactSupport,
     });
   } catch (error) {
@@ -81,5 +101,5 @@ app.post('/contact-support', async (req, res) => {
 });
 
 app.listen(PORT, () => {
-  console.log(`🚀 Server is running on http://localhost:${PORT}`);
+  console.log(`Server is running on http://localhost:${PORT}`);
 });

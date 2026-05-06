@@ -22,6 +22,8 @@ const initialForm: SupportForm = {
 
 function App() {
   const [form, setForm] = useState<SupportForm>(initialForm)
+  const [status, setStatus] = useState<'idle' | 'sending' | 'success' | 'error'>('idle')
+  const [statusMessage, setStatusMessage] = useState('')
 
   const preview = useMemo(
     () => ({
@@ -43,8 +45,39 @@ function App() {
       }))
     }
 
-  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault()
+
+    setStatus('sending')
+    setStatusMessage('')
+
+    try {
+      const apiUrl = import.meta.env.VITE_API_URL || 'http://localhost:5000'
+      const response = await fetch(`${apiUrl}/contact-support`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(form),
+      })
+
+      const result = await response.json()
+
+      if (!response.ok) {
+        throw new Error(result.message || 'Unable to send your message.')
+      }
+
+      setForm(initialForm)
+      setStatus('success')
+      setStatusMessage('Your message was sent successfully.')
+    } catch (error) {
+      setStatus('error')
+      setStatusMessage(
+        error instanceof Error
+          ? error.message
+          : 'Unable to send your message.',
+      )
+    }
   }
 
   return (
@@ -108,10 +141,16 @@ function App() {
               />
             </div>
 
-            <button type="submit">
+            <button type="submit" disabled={status === 'sending'}>
               <Send size={18} aria-hidden="true" />
-              Submit request
+              {status === 'sending' ? 'Sending...' : 'Submit request'}
             </button>
+
+            {statusMessage && (
+              <p className={`form-status form-status-${status}`} role="status">
+                {statusMessage}
+              </p>
+            )}
           </form>
         </div>
 
