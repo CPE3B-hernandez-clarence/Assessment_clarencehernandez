@@ -3,7 +3,6 @@ import { env } from '../config/env';
 import { canSendMail, transporter } from '../config/mailer';
 import { buildSupportEmailHtml } from '../emails/supportEmail';
 import ContactSupport from '../models/ContactSupport';
-import EmailVerification from '../models/EmailVerification';
 
 export const createContactSupportMessage = async (req: Request, res: Response) => {
   try {
@@ -16,14 +15,6 @@ export const createContactSupportMessage = async (req: Request, res: Response) =
     if (!name || !email || !message) {
       res.status(400).json({
         message: 'Name, email, and message are required',
-      });
-      return;
-    }
-
-    const verifiedRecord = await EmailVerification.findOne({ email, isVerified: true });
-    if (!verifiedRecord) {
-      res.status(403).json({
-        message: 'Please verify your email before submitting.',
       });
       return;
     }
@@ -71,7 +62,6 @@ export const createContactSupportMessage = async (req: Request, res: Response) =
       data: contactSupport,
     });
 
-    await EmailVerification.deleteOne({ email });
   } catch (error) {
     console.error('Contact support error:', error);
 
