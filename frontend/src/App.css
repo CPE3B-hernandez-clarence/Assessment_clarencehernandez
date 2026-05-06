@@ -30,9 +30,7 @@
 }
 
 .support-form-panel {
-  background:
-    linear-gradient(145deg, rgba(37, 192, 174, 0.1), transparent 42%),
-    var(--surface);
+  background: var(--surface);
 }
 
 .preview-panel {

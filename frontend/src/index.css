@@ -10,7 +10,7 @@
   --accent: #088b83;
   --accent-bg: rgba(8, 139, 131, 0.14);
   --accent-border: rgba(8, 139, 131, 0.42);
-  --button-bg: linear-gradient(135deg, #0a8197, #08a178);
+  --button-bg: var(--accent);
   --button-shadow: rgba(8, 139, 131, 0.24) 0 12px 22px;
   --button-shadow-hover: rgba(8, 129, 151, 0.3) 0 18px 34px;
   --field-shadow: rgba(9, 84, 102, 0.08) 0 10px 20px;
@@ -30,11 +30,7 @@
 
   font: 15px/1.5 var(--sans);
   color: var(--text);
-  background:
-    radial-gradient(circle at 20% 18%, rgba(8, 161, 120, 0.24), transparent 28%),
-    radial-gradient(circle at 82% 78%, rgba(10, 129, 151, 0.24), transparent 30%),
-    linear-gradient(135deg, rgba(8, 139, 131, 0.12), transparent 38%),
-    var(--bg);
+  background: var(--bg);
   font-synthesis: none;
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
