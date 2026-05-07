@@ -28,7 +28,7 @@
     rgba(12, 47, 56, 0.08) 0 8px 18px;
   --sans: Inter, ui-sans-serif, system-ui, 'Segoe UI', Roboto, Arial, sans-serif;
 
-  font: 15px/1.5 var(--sans);
+  font: 13px/1.5 var(--sans);
   color: var(--text);
   background: var(--bg);
   font-synthesis: none;
@@ -64,12 +64,12 @@ h2 {
 h1 {
   max-width: 520px;
   margin-bottom: 14px;
-  font-size: clamp(2rem, 4vw, 3.25rem);
+  font-size: clamp(1.5rem, 3vw, 2.5rem);
   line-height: 1.06;
 }
 
 h2 {
-  font-size: clamp(1.35rem, 2.4vw, 1.8rem);
+  font-size: clamp(1.1rem, 2vw, 1.35rem);
   line-height: 1.18;
 }
 

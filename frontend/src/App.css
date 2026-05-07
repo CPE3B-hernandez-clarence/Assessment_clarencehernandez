@@ -8,7 +8,7 @@
 }
 
 .support-shell {
-  width: min(920px, calc(100vw - 36px));
+  width: min(800px, calc(100vw - 36px));
   max-height: calc(100svh - 40px);
   display: grid;
   grid-template-columns: minmax(0, 1.04fr) minmax(300px, 0.96fr);
@@ -26,7 +26,7 @@
 
 .support-form-panel,
 .preview-panel {
-  padding: 32px;
+  padding: 20px;
 }
 
 .support-form-panel {
@@ -109,7 +109,7 @@
   width: 100%;
   box-sizing: border-box;
   border: 0;
-  padding: 12px 0;
+  padding: 8px 0;
   color: var(--text-h);
   background: transparent;
   font: inherit;
@@ -118,7 +118,7 @@
 
 .support-form textarea {
   resize: vertical;
-  min-height: 130px;
+  min-height: 90px;
 }
 
 .support-form button {
@@ -126,7 +126,7 @@
   align-items: center;
   justify-content: center;
   gap: 9px;
-  min-height: 44px;
+  min-height: 36px;
   margin-top: 10px;
   border: 0;
   border-radius: 8px;
@@ -178,7 +178,7 @@
   gap: 22px;
   border: 1px solid var(--border);
   border-radius: 8px;
-  padding: 22px;
+  padding: 16px;
   background: var(--surface);
   text-align: left;
   box-shadow: var(--card-shadow);
@@ -246,7 +246,7 @@
 
   .support-form-panel,
   .preview-panel {
-    padding: 28px 20px;
+    padding: 16px;
   }
 
   .preview-panel {
