@@ -5,5 +5,3 @@ export type SupportForm = {
 };
 
 export type SubmitStatus = 'idle' | 'sending' | 'success' | 'error';
-
-export type VerificationStatus = 'idle' | 'sending' | 'sent' | 'verified' | 'error';

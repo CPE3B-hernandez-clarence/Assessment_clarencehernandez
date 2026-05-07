@@ -29,11 +29,5 @@ const postJson = async <TBody>(path: string, body: TBody, fallbackMessage: strin
   return result;
 };
 
-export const requestEmailVerification = (email: string) =>
-  postJson('/verify-email-request', { email }, 'Unable to send verification email.');
-
-export const verifyEmailOtp = (email: string, otp: string) =>
-  postJson('/verify-otp', { email, otp }, 'Invalid or expired OTP.');
-
 export const submitSupportMessage = (form: SupportForm) =>
   postJson('/contact-support', form, 'Unable to send your message.');

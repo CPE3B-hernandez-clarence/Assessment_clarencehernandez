@@ -104,16 +104,6 @@
   padding-top: 12px;
 }
 
-.verification-row {
-  display: flex;
-  gap: 8px;
-}
-
-.verification-row .field-control {
-  flex: 1;
-  min-width: 0;
-}
-
 .support-form input,
 .support-form textarea {
   width: 100%;
@@ -170,14 +160,6 @@
 .support-form button:focus-visible {
   outline: 3px solid var(--accent-border);
   outline-offset: 3px;
-}
-
-.support-form .secondary-action {
-  width: auto;
-  min-width: 112px;
-  margin-top: 0;
-  padding: 0 16px;
-  white-space: nowrap;
 }
 
 .preview-header {
@@ -272,11 +254,4 @@
     border-top: 1px solid var(--border);
   }
 
-  .verification-row {
-    flex-direction: column;
-  }
-
-  .support-form .secondary-action {
-    width: 100%;
-  }
 }
