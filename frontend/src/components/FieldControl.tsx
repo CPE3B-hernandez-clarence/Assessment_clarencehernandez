@@ -9,7 +9,7 @@ type FieldControlProps = {
 export function FieldControl({ children, icon, textarea = false }: FieldControlProps) {
   return (
     <div className={`field-control${textarea ? ' field-control-textarea' : ''}`}>
-      {icon}
+      {icon && <span className="field-icon">{icon}</span>}
       {children}
     </div>
   );

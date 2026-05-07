@@ -2,6 +2,7 @@ import { SupportFormPanel } from './components/SupportFormPanel';
 import { SupportPreview } from './components/SupportPreview';
 import { useSupportForm } from './hooks/useSupportForm';
 import './App.css';
+import './modern-theme.css';
 
 function App() {
   const supportForm = useSupportForm();

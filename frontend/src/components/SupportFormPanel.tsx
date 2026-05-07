@@ -5,6 +5,8 @@ import {
   MessageSquareText,
   Send,
   UserRound,
+  CheckCircle2,
+  AlertCircle,
 } from 'lucide-react';
 import { FieldControl } from './FieldControl';
 import type { SubmitStatus, SupportForm } from '../types/support';
@@ -83,6 +85,8 @@ export function SupportFormPanel({
 
         {statusMessage && (
           <p className={`form-status form-status-${status}`} role="status">
+            {status === 'success' && <CheckCircle2 size={18} aria-hidden="true" />}
+            {status === 'error' && <AlertCircle size={18} aria-hidden="true" />}
             {statusMessage}
           </p>
         )}
